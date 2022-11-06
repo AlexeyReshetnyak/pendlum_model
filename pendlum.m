@@ -1,6 +1,5 @@
-N = 1000;
-%t_final = 2;
-t_final = 10;
+N = 100000000;
+t_final = 20;
 h = t_final/N;
 
 x = zeros(1, N);
@@ -22,24 +21,24 @@ v_y(1) = v_init;
 
 m = 1;
 L = 5;
-% How to find T?
-T = 13.1;
 
 %acc_error = 0.1
 
 for ii = 1:N
   g = 9.81 + 0.05 * sin(2*pi*h*ii);
-  v_x(ii + 1) = v_x(ii) - (h * x(ii) * T)/(L * m);
+  T_x = abs(m * g * (x(ii)/L));
   x(ii + 1) = x(ii) + h*v_x(ii);
+  v_x(ii + 1) = v_x(ii) - (h * x(ii) * T_x)/(L * m);
+  T_y = abs(m * g * (y(ii)/L));
   y(ii + 1) = y(ii) + h*v_y(ii);
-  v_y(ii + 1) = v_y(ii) - h * ((y(ii) * T)/(L * m) - m * g);
+  v_y(ii + 1) = v_y(ii) - h * (y(ii) * T_y)/(L * m) - h * g;
 %  if x(ii)^2 + y(ii)^2 >= L^2 + acc_error || x(ii)^2 + y(ii)^2 <= L^2 - acc_error
 %    fprintf('Divergence. Change modeling parameters.\n')
 %    return;
 %  end
 end
 
-l_hat =  sqrt(x.^2 + y.^2)
+l_hat =  sqrt(x.^2 + y.^2);
 
 figure(1)
 plot(x)
