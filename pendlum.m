@@ -1,7 +1,7 @@
-N = 10000;
+N = 1000;
 %t_final = 2;
-t_final = 100;
-h = 2/N;
+t_final = 10;
+h = t_final/N;
 
 x = zeros(1, N);
 y = zeros(1, N);
@@ -23,7 +23,7 @@ v_y(1) = v_init;
 m = 1;
 L = 5;
 % How to find T?
-T = 100;
+T = 13.1;
 
 %acc_error = 0.1
 
@@ -39,5 +39,11 @@ for ii = 1:N
 %  end
 end
 
-shift_mod = sqrt(x.^2 + y.^2);
-plot(shift_mod)
+l_hat =  sqrt(x.^2 + y.^2)
+
+figure(1)
+plot(x)
+figure(2)
+plot(y)
+figure(3)
+plot(l_hat)
