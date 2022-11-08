@@ -1,5 +1,5 @@
-N = 100000000;
-t_final = 20;
+N = 1000000;
+t_final = 100;
 h = t_final/N;
 
 x = zeros(1, N);
@@ -25,13 +25,14 @@ L = 5;
 %acc_error = 0.1
 
 for ii = 1:N
-  g = 9.81 + 0.05 * sin(2*pi*h*ii);
-  T_x = abs(m * g * (x(ii)/L));
+  t = h * ii;
+  g = 9.81 + 0.05 * sin(2*pi*t);
+  v_sq = v_x(ii)^2 + v_y(ii)^2;
+  T = m * (g * (-1)*(y(ii)/L) + v_sq/L);
   x(ii + 1) = x(ii) + h*v_x(ii);
-  v_x(ii + 1) = v_x(ii) - (h * x(ii) * T_x)/(L * m);
-  T_y = abs(m * g * (y(ii)/L));
+  v_x(ii + 1) = v_x(ii) - (h * x(ii) * T)/(L * m);
   y(ii + 1) = y(ii) + h*v_y(ii);
-  v_y(ii + 1) = v_y(ii) - h * (y(ii) * T_y)/(L * m) - h * g;
+  v_y(ii + 1) = v_y(ii) - h * (y(ii) * T)/(L * m) - h * g;
 %  if x(ii)^2 + y(ii)^2 >= L^2 + acc_error || x(ii)^2 + y(ii)^2 <= L^2 - acc_error
 %    fprintf('Divergence. Change modeling parameters.\n')
 %    return;
